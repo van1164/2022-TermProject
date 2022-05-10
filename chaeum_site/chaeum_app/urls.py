@@ -18,5 +18,8 @@ from django.urls import path,include
 from chaeum_app import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.main_page, name = '')
+    path('',views.main_page, name = ''),
+    path('Main',views.main_page, name = ''),
+    path('login',views.login,name='login'),
+    path('create_interior',views.create_interior,name='create_interior')
 ]

@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-f37ybk03n6#k-vka&hpe9a$w4i$*uigs&7s@9!!%0!rv=bwyh4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com','210.99.198.158']
 
 
 # Application definition
@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'chaeum_site.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
