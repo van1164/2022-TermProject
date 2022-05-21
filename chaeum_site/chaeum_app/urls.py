@@ -21,5 +21,6 @@ urlpatterns = [
     path('',views.main_page, name = ''),
     path('Main',views.main_page, name = ''),
     path('login',views.login,name='login'),
-    path('create_interior',views.create_interior,name='create_interior')
+    path('create_interior',views.create_interior,name='create_interior'),
+    path('verify',views.verify,name='verify')
 ]

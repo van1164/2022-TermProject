@@ -1,9 +1,22 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import Account,interior
 from django.http import JsonResponse
 # Create your views here.
 def main_page(request):
-    data = {'login':False}
+    user_id = request.session.get('user')
+    data = {'login':False} 
+    print(user_id)   
+    if user_id:
+        data['login'] = True
+        n = Account.objects.get(user_id=user_id)
+        data['name'] = n.name
+        data['id'] = n.user_id
+        print(n.star_address.split(','))
+        data['star_address'] = n.star_address.split(',')
+        return render(request,'chaeum_app/main.html',data)
+    else:
+        return render(request,'chaeum_app/login.html',{'error':False})
+
     if request.method =="POST":
         uid = request.POST.get("userid",None)
         pw = request.POST.get("password",None)
@@ -18,21 +31,34 @@ def main_page(request):
         star_address = star_address.split(',')
         data['star_address'] = star_address 
     return render(request,'chaeum_app/main.html',data)
-def verify(id,password):
-    if Account.objects.filter(user_id=id).exists():
-        n = Account.objects.get(user_id=id)
-        if n.password == password:
-            result=dict()
-            result['name'] = n.name
-            result['id'] = n.user_id
-            return result
-        else:
-            return False
+def verify(request):
+    if request.method =="POST":
+        print("TTT")
+        uid = request.POST.get("userid",None)
+        pw = request.POST.get("password",None)
+        print(uid,pw)
+        if Account.objects.filter(user_id=uid).exists():
+            n = Account.objects.get(user_id=uid)
+            if n.password == pw:
+                request.session['user'] = uid
+                return redirect('')
+            else:
+                return render('chaeum_app/login.html',{'error':True})
     else:
-        return False
+        print("none post")
+        return render('chaeum_app/login.html',{'error':True})
 
 def login(request):
-    return render(request, 'chaeum_app/login.html',{})
+    return render(request, 'chaeum_app/login.html',{'error':False})
+
+def logout(request):
+    if request.session.get('user'):
+        del(request.session['user'])
+    return redirect('Main')
+
+def go_to_create_interior(request):
+    return render('chaeum_app/create_interior.html')
+
 
 def create_interior(request):
     data =[{
