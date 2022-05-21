@@ -54,7 +54,7 @@ def login(request):
 def logout(request):
     if request.session.get('user'):
         del(request.session['user'])
-    return redirect('Main')
+    return redirect('/Main')
 
 def go_to_create_interior(request):
     return render('chaeum_app/create_interior.html')
