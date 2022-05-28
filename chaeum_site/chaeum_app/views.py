@@ -70,6 +70,11 @@ def create_interior(request):
         interior.objects.create(user_id = user_id,interior_name = title,start_date=start_date,end_date=end_date, address=address,job =job)
         
     return redirect('/Main')
+def register(request):
+    return render(request,'chaeum_app/register.html')
+#회원가입 확인
+def confirm_register(request):
+    pass
 
 def send_to_mobile(request):
 
