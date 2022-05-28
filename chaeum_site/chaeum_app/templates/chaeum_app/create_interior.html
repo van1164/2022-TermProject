@@ -41,19 +41,36 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">채움 인테리어</h1>
                                     </div>
-                                    <form class="user" method ="POST" action = "verify">
+                                    <form class="user" method ="POST" action = "create_interior">
                                         {% csrf_token %}
                                         <div class="form-group">
-                                            <h4>필</h4>
-                                            <input type="id"name="userid" class="form-control form-control-user"
+                                            <h4>제목:</h4>
+                                            <input type="id"name="title" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="아이디를 입력하세요">
+                                                placeholder="제목을 입력해주세요">
+                                        </div>
+                                        <div>
+                                            <h4>필요 직군:</h4>
+                                            <label><input type="checkbox" name="job_1" value="도배"> 도배</label>
+                                            <label><input type="checkbox" name="job_2" value="장판"> 장판</label>
+                                            <label><input type="checkbox" name="job_3" value="샷시"> 샷시</label>
+                                            <label><input type="checkbox" name="job_4" value="타일"> 타일</label>
+                                          </div>
+                                        <div class="form-group">
+                                            <h4>공사 주소:</h4>
+                                            <input type="id"name="address" class="form-control form-control-user"
+                                                id="exampleInputEmail" aria-describedby="emailHelp"
+                                                placeholder="주소를 입력하세요">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" name="password"class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="비밀번호를 입력하세요">
+                                            <h4>공사 시작날짜: </h4>
+                                            <p><input type="date" name="start"></p>
                                         </div>
-                                        <input type="submit" vlaue="로그인" class="btn btn-primary btn-user btn-block">
+                                        <div class="form-group">
+                                            <h4>공사 종료날짜: </h4>
+                                            <p><input type="date" name="end"></p>
+                                        </div>
+                                        <input type="submit"name ="의뢰하기" vlaue="의뢰하기" class="btn btn-primary btn-user btn-block">
                                     
                                     </form>
                                 </div>

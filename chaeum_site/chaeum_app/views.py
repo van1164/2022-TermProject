@@ -13,24 +13,14 @@ def main_page(request):
         data['id'] = n.user_id
         print(n.star_address.split(','))
         data['star_address'] = n.star_address.split(',')
+        inte = interior.objects.all()
+        data['interior'] = inte
+        
         return render(request,'chaeum_app/main.html',data)
     else:
         return render(request,'chaeum_app/login.html',{'error':False})
 
-    if request.method =="POST":
-        uid = request.POST.get("userid",None)
-        pw = request.POST.get("password",None)
-        user_data = verify(uid,pw)
-        if user_data == False:
-            return render(request, 'chaeum_app/login.html',{})
-        data['name'] = user_data['name']
-        data['id'] = user_data['id']
-        print(data['name'])
-        data['login'] = True
-        star_address = Account.objects.get(user_id=uid).star_address
-        star_address = star_address.split(',')
-        data['star_address'] = star_address 
-    return render(request,'chaeum_app/main.html',data)
+
 def verify(request):
     if request.method =="POST":
         print("TTT")
@@ -57,10 +47,32 @@ def logout(request):
     return redirect('/Main')
 
 def go_to_create_interior(request):
-    return render('chaeum_app/create_interior.html')
+    return render(request,'chaeum_app/create_interior.html',{})
 
 
 def create_interior(request):
+    if request.method =="POST":
+        user_id = request.session['user']
+        title = request.POST.get("title",None)
+        start_date = request.POST.get("start",None)
+        end_date = request.POST.get("end",None)
+        address = request.POST.get("address",None)
+        job_list = [request.POST.get("job_1",''), request.POST.get("job_2",''), request.POST.get("job_3",''), request.POST.get("job_4",'')]
+        job =[]
+        for i in job_list:
+            if i =='':
+                continue
+            else:
+                job.append(i)
+                
+        job =",".join(job)
+        print(job)
+        interior.objects.create(user_id = user_id,interior_name = title,start_date=start_date,end_date=end_date, address=address,job =job)
+        
+    return redirect('/Main')
+
+def send_to_mobile(request):
+
     data =[{
     'category': '김시환',
     'profileImgUrl': 'https://placeimg.com/200/100/people/grayscale',
@@ -83,5 +95,5 @@ def create_interior(request):
     },      
            
            ]
-    print("vote!!")
+
     return JsonResponse(data,safe=False)

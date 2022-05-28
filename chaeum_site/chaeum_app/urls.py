@@ -23,5 +23,6 @@ urlpatterns = [
     path('login',views.login,name='login'),
     path('create_interior',views.create_interior,name='create_interior'),
     path('verify',views.verify,name='verify'),
-    path('logout',views.logout,name='logout')
+    path('logout',views.logout,name='logout'),
+    path('go_to_create',views.go_to_create_interior,name='go_to_create_interior'),
 ]

@@ -23,13 +23,14 @@ class Account(models.Model):
 
 #모든 인테리어
 class interior(models.Model):
-    interior_name = models.CharField(max_length=30,unique=True,verbose_name='인테리어 제목')
+    user_id = models.CharField(max_length=32, verbose_name='user_id',null=True)
+    interior_name = models.CharField(max_length=30,verbose_name='인테리어 제목')
     id = models.AutoField(primary_key=True)
-    start_date = models.DateTimeField(
+    start_date = models.DateField(
         default=timezone.now,verbose_name="공사 시작일")
-    end_date = models.DateTimeField(
+    end_date = models.DateField(
         default=timezone.now,verbose_name="공사 종료일")
-    address = models.CharField(max_length=30,unique=True,verbose_name='인테리어 제목')
+    address = models.CharField(max_length=30,verbose_name='인테리어 주소')
     job = models.CharField(max_length=32,default='',verbose_name="직종") # 목수, 도배, 장판 등등
     class Meta:
         db_table = 'interior'
