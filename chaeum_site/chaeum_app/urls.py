@@ -25,4 +25,5 @@ urlpatterns = [
     path('verify',views.verify,name='verify'),
     path('logout',views.logout,name='logout'),
     path('go_to_create',views.go_to_create_interior,name='go_to_create_interior'),
+    path("mobile",views.send_to_mobile,name='mobile')
 ]
