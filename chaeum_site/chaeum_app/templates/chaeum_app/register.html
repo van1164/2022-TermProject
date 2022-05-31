@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+    {% load static %}
 <head>
 
     <meta charset="utf-8">
@@ -18,7 +18,7 @@
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="{%static '/css/sb-admin-2.min.css'%}" rel="stylesheet">
 
 </head>
 
@@ -34,43 +34,45 @@
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                                <h1 class="h4 text-gray-900 mb-4">채움 회원가입</h1>
                             </div>
-                            <form class="user">
+                            <form class="user" method ="POST" action = "create_account">
+                                {% csrf_token %}
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
+                                        <input type="text" class="form-control form-control-user" name="FirstName"
                                             placeholder="First Name">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" id="exampleLastName"
+                                        <input type="text" class="form-control form-control-user" name="LastName"
                                             placeholder="Last Name">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" id="exampleInputEmail"
+                                    <input type="email" class="form-control form-control-user" name="InputEmail"
                                         placeholder="Email Address">
+                                </div>
+                                <div class="form-group">
+                                    <input type="id" class="form-control form-control-user" name="Inputid"
+                                        placeholder="ID">
+                                        {%if ierror == False%}
+                                        이미 존재하는 아이디 입니다..
+                                        {%endif%}
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="password" class="form-control form-control-user"
-                                            id="exampleInputPassword" placeholder="Password">
+                                            id="InputPassword" name="InputPassword" placeholder="Password">
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="password" class="form-control form-control-user"
-                                            id="exampleRepeatPassword" placeholder="Repeat Password">
+                                            id="RepeatPassword"  name="RepeatPassword" placeholder="Repeat Password">
                                     </div>
+                                    {%if perror == False%}
+                                    입력 비밀번호가 서로 다릅니다.
+                                    {%endif%}
                                 </div>
-                                <a href="login.html" class="btn btn-primary btn-user btn-block">
-                                    Register Account
-                                </a>
-                                <hr>
-                                <a href="index.html" class="btn btn-google btn-user btn-block">
-                                    <i class="fab fa-google fa-fw"></i> Register with Google
-                                </a>
-                                <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                    <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
-                                </a>
+                                <input type="submit" vlaue=" Register Account" class="btn btn-primary btn-user btn-block">
                             </form>
                             <hr>
                             <div class="text-center">

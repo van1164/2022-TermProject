@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from .models import Account,interior
 from django.http import JsonResponse
+from django.utils import timezone
 # Create your views here.
 def main_page(request):
     user_id = request.session.get('user')
@@ -15,7 +16,17 @@ def main_page(request):
         data['star_address'] = n.star_address.split(',')
         inte = interior.objects.all()
         data['interior'] = inte
-        
+        lst = interior.objects.filter(user_id = user_id)
+        data['my_interior'] = lst
+        go_lst =[]
+        idx = n.interior.split(',')
+        print(idx)
+        for i in idx:
+            if i =='' or i ==' ':
+                continue
+            go_lst.append(interior.objects.get(id = i))
+        print(go_lst)
+        data['go_interior'] = go_lst
         return render(request,'chaeum_app/main.html',data)
     else:
         return render(request,'chaeum_app/login.html',{'error':False})
@@ -68,13 +79,37 @@ def create_interior(request):
         job =",".join(job)
         print(job)
         interior.objects.create(user_id = user_id,interior_name = title,start_date=start_date,end_date=end_date, address=address,job =job)
+
         
     return redirect('/Main')
 def register(request):
-    return render(request,'chaeum_app/register.html')
+    return render(request,'chaeum_app/register.html',{'perror':True,'ierror':True})
 #회원가입 확인
-def confirm_register(request):
-    pass
+def create_account(request):
+    data = {"perror":True, "ierror":True}
+    if request.method =="POST":
+        if request.POST.get("InputPassword") != request.POST.get("RepeatPassword"):
+            data["perror"] = False
+            return render(request,'chaeum_app/register.html',data)
+        if Account.objects.filter(user_id=request.POST.get("Inputid")).exists():
+            data["ierror"]=False
+            return render(request,'chaeum_app/register.html',data)
+        name= request.POST.get("FirstName") +request.POST.get("LastName")
+        email = request.POST.get("InputEmail")
+        id =request.POST.get("Inputid")
+        password = request.POST.get("InputPassword")
+        Account.objects.create(user_id=id,password = password,email=email,name =name)
+        return redirect('/login')
+
+def admit(request):
+    if request.method =="POST":
+        user_id = request.POST.get("userid")
+        inte_id = request.POST.get("inteid")
+        acc = Account.objects.get(user_id=user_id)
+        acc.interior = acc.interior+inte_id+", "
+        acc.save()
+        return redirect('/Main')
+
 
 def send_to_mobile(request):
     data = []
