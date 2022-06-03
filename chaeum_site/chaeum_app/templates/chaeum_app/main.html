@@ -23,8 +23,13 @@
 
 </head>
 
-<body id="page-top">
+{% for message in messages %}
+<script>
+    alert("{{message}}")
+</script>
+{% endfor %}
 
+<body id="page-top">
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -201,11 +206,17 @@
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">기간 협의가능</div>
                                             <form method ="POST" action = "admit">
                                                 {% csrf_token %}
+                                                {%if inte.matching == False%}
+                                                {%if inte.id not in user_inte%}
                                             <div>
-                                                <input type="hidden" name ="userid" value={{id}}>
-                                                <input type="hidden" name ="inteid" value={{inte.id}}>
-                                                <input type="submit" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" value ="신청하기">
+                                                <a href="admit?user_id={{id}}&&inte_id={{inte.id}}"class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">신청하기</a>
                                                 </div>
+                                                {%else%}
+                                                <div class="text-xs font-weight-bold text-uppercase mb-1" style="color: red; font-size: larger;">신청완료</div>
+                                                {%endif%}
+                                                {%else%}
+                                                <div class="text-xs font-weight-bold text-uppercase mb-1" style="color: red; font-size: larger;">마감</div>
+                                                {%endif%}
                                         </div>
 
                                     </div>
@@ -280,9 +291,13 @@
                                                 <span class="m-0 font-weight-bold text-primary">
                                                     {{inte.user_id}}</span>
                                             </div>
+                                            {%if inte.matching == False%}
                                             <div>
-                                                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">프로필 보기</a>
+                                                <a href="show_profile?user_id={{inte.user_id}}&&inte_id={{inte.id}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">프로필 보기</a>
                                                 </div>
+                                            {%else%}
+                                            <div class="text-xs font-weight-bold text-uppercase mb-1" style="color: red; font-size: larger;">확정</div>
+                                            {%endif%}
                                         </div>
 
                                     </div>

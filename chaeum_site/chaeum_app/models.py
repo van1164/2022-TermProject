@@ -32,6 +32,7 @@ class interior(models.Model):
         default=timezone.now,verbose_name="공사 종료일")
     address = models.CharField(max_length=30,verbose_name='인테리어 주소')
     job = models.CharField(max_length=32,default='',verbose_name="직종") # 목수, 도배, 장판 등등
+    matching = models.BooleanField(default=False)
     class Meta:
         db_table = 'interior'
         verbose_name='interior'

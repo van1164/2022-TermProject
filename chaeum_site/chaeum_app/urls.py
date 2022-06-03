@@ -28,5 +28,7 @@ urlpatterns = [
     path("mobile",views.send_to_mobile,name='mobile'),
     path("register",views.register,name='register'),
     path("create_account",views.create_account,name="create_account"),
-    path("admit",views.admit,name='admit')
+    path("admit",views.admit,name='admit'),
+    path("show_profile",views.show_profile,name='show_profile'),
+    path("select",views.select,name='select')
 ]

@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from .models import Account,interior
 from django.http import JsonResponse
 from django.utils import timezone
+from django.contrib import messages
 # Create your views here.
 def main_page(request):
     user_id = request.session.get('user')
@@ -20,13 +21,16 @@ def main_page(request):
         data['my_interior'] = lst
         go_lst =[]
         idx = n.interior.split(',')
-        print(idx)
+        user_inte = []
         for i in idx:
             if i =='' or i ==' ':
                 continue
             go_lst.append(interior.objects.get(id = i))
+            user_inte.append(int(i))
         print(go_lst)
+        print(user_inte)
         data['go_interior'] = go_lst
+        data['user_inte'] = user_inte
         return render(request,'chaeum_app/main.html',data)
     else:
         return render(request,'chaeum_app/login.html',{'error':False})
@@ -102,14 +106,40 @@ def create_account(request):
         return redirect('/login')
 
 def admit(request):
-    if request.method =="POST":
-        user_id = request.POST.get("userid")
-        inte_id = request.POST.get("inteid")
+    if request.method =="GET":
+        print(request.POST)
+        user_id = request.GET.get("user_id")
+        print(user_id)
+        inte_id = request.GET.get("inte_id")
         acc = Account.objects.get(user_id=user_id)
+        print(inte_id,"여기!!!!!!!!!!!!!!")
         acc.interior = acc.interior+inte_id+", "
         acc.save()
+        messages.warning(request, "신청되었습니다.")
         return redirect('/Main')
 
+def show_profile(request):
+    data = dict()
+    if request.method =="GET":
+        print(request.GET)
+        user_id = request.GET.get("user_id")
+        inte_id = request.GET.get("inte_id")
+        print(user_id)
+        user =Account.objects.get(user_id = user_id)
+        data['user'] = user
+        data['time'] = str(len(user.interior.split(',')))
+        data['inte_id'] = inte_id
+    return render(request,'chaeum_app/show_profile.html',data)
+
+def select(request):
+    if request.method =="GET":
+        print(request.GET)
+        user_id = request.GET.get("user_id")
+        inte_id = request.GET.get("inte_id")
+        inte =interior.objects.get(id = inte_id)
+        inte.matching = True
+        inte.save()
+    return redirect('/Main')
 
 def send_to_mobile(request):
     data = []
