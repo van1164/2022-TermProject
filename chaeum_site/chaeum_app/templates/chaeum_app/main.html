@@ -287,9 +287,12 @@
                                                 <span class="m-0 font-weight-bold text-primary">
                                                     {{inte.end_date}}</span>
                                             </div>
+                                            {%if inte.admit_user == None%}
+                                            <div class="text-xs font-weight-bold text-uppercase mb-1" style="color: red; font-size: larger;">지원자 없음</div>
+                                            {%else%}
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">지원자 계정
                                                 <span class="m-0 font-weight-bold text-primary">
-                                                    {{inte.user_id}}</span>
+                                                    {{inte.admit_user}}</span>
                                             </div>
                                             {%if inte.matching == False%}
                                             <div>
@@ -299,7 +302,7 @@
                                             <div class="text-xs font-weight-bold text-uppercase mb-1" style="color: red; font-size: larger;">확정</div>
                                             {%endif%}
                                         </div>
-
+                                        {%endif%}
                                     </div>
                                 </div>
                             </div>

@@ -115,6 +115,9 @@ def admit(request):
         print(inte_id,"여기!!!!!!!!!!!!!!")
         acc.interior = acc.interior+inte_id+", "
         acc.save()
+        inte =interior.objects.get(id =inte_id)
+        inte.admit_user = user_id
+        inte.save()
         messages.warning(request, "신청되었습니다.")
         return redirect('/Main')
 

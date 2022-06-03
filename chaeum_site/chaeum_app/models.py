@@ -33,6 +33,7 @@ class interior(models.Model):
     address = models.CharField(max_length=30,verbose_name='인테리어 주소')
     job = models.CharField(max_length=32,default='',verbose_name="직종") # 목수, 도배, 장판 등등
     matching = models.BooleanField(default=False)
+    admit_user =  models.CharField(max_length=32,default=None,null=True)
     class Meta:
         db_table = 'interior'
         verbose_name='interior'
