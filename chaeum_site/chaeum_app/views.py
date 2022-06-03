@@ -51,7 +51,7 @@ def verify(request):
                 return render('chaeum_app/login.html',{'error':True})
     else:
         print("none post")
-        return render('chaeum_app/login.html',{'error':True})
+        return render(request,'chaeum_app/login.html',{'error':True})
 
 def login(request):
     return render(request, 'chaeum_app/login.html',{'error':False})
