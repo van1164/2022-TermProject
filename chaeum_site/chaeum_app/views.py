@@ -48,7 +48,7 @@ def verify(request):
                 request.session['user'] = uid
                 return redirect('')
             else:
-                return render('chaeum_app/login.html',{'error':True})
+                return render(request,'chaeum_app/login.html',{'error':True})
     else:
         print("none post")
         return render(request,'chaeum_app/login.html',{'error':True})
