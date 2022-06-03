@@ -49,6 +49,8 @@ def verify(request):
                 return redirect('')
             else:
                 return render(request,'chaeum_app/login.html',{'error':True})
+        else:
+            return render(request,'chaeum_app/login.html',{'error':True})
     else:
         print("none post")
         return render(request,'chaeum_app/login.html',{'error':True})
