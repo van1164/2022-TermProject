@@ -3,17 +3,15 @@ from .models import Account,interior
 from django.http import JsonResponse
 from django.utils import timezone
 from django.contrib import messages
-# Create your views here.
+
 def main_page(request):
     user_id = request.session.get('user')
     data = {'login':False} 
-    print(user_id)   
     if user_id:
         data['login'] = True
         n = Account.objects.get(user_id=user_id)
         data['name'] = n.name
         data['id'] = n.user_id
-        print(n.star_address.split(','))
         data['star_address'] = n.star_address.split(',')
         inte = interior.objects.all()
         data['interior'] = inte
@@ -27,8 +25,6 @@ def main_page(request):
                 continue
             go_lst.append(interior.objects.get(id = i))
             user_inte.append(int(i))
-        print(go_lst)
-        print(user_inte)
         data['go_interior'] = go_lst
         data['user_inte'] = user_inte
         return render(request,'chaeum_app/main.html',data)
@@ -38,10 +34,8 @@ def main_page(request):
 
 def verify(request):
     if request.method =="POST":
-        print("TTT")
         uid = request.POST.get("userid",None)
         pw = request.POST.get("password",None)
-        print(uid,pw)
         if Account.objects.filter(user_id=uid).exists():
             n = Account.objects.get(user_id=uid)
             if n.password == pw:
@@ -52,7 +46,6 @@ def verify(request):
         else:
             return render(request,'chaeum_app/login.html',{'error':True})
     else:
-        print("none post")
         return render(request,'chaeum_app/login.html',{'error':True})
 
 def login(request):
@@ -83,7 +76,6 @@ def create_interior(request):
                 job.append(i)
                 
         job =",".join(job)
-        print(job)
         interior.objects.create(user_id = user_id,interior_name = title,start_date=start_date,end_date=end_date, address=address,job =job)
 
         
@@ -109,12 +101,9 @@ def create_account(request):
 
 def admit(request):
     if request.method =="GET":
-        print(request.POST)
         user_id = request.GET.get("user_id")
-        print(user_id)
         inte_id = request.GET.get("inte_id")
         acc = Account.objects.get(user_id=user_id)
-        print(inte_id,"여기!!!!!!!!!!!!!!")
         acc.interior = acc.interior+inte_id+", "
         acc.save()
         inte =interior.objects.get(id =inte_id)
