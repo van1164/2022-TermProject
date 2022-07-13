@@ -1,4 +1,4 @@
-# 2022-TermProject
+# 채움Project
 ![메인 페이지](./img/메인.png)
 메인페이지
 
